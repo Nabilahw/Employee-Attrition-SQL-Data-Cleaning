@@ -1,0 +1,102 @@
+use emp;
+
+-- Change table name
+alter table `hr-employee-attrition`
+rename to employee;
+
+-- Change column name
+alter table employee
+rename column `ï»¿Age` to `Age`;
+
+alter table emp_dtl
+rename column `YearsAtCompany` to `Tenure`;
+
+-- Add prime key
+alter table employee
+add id int auto_increment primary key ;
+
+alter table employee modify id int after age;
+alter table employee modify age int after id;
+
+-- Drop unnecassary column
+alter table employee
+drop column education, drop employeecount, drop jobinvolvement, drop joblevel,
+drop over18, drop relationshipsatisfaction, drop stockoptionlevel, drop numcompaniesworked, drop yearswithcurrmanager;
+
+-- Reorder column
+alter table employee modify employeenumber int after id; 
+alter table employee modify jobrole text after employeenumber;
+alter table employee modify department text after jobrole;
+alter table employee modify gender text after age;
+alter table employee modify dailyrate int after attrition;
+alter table employee modify hourlyrate int after attrition;
+alter table employee modify monthlyrate int after dailyrate;
+alter table employee modify monthlyincome int after monthlyrate;
+alter table employee modify overtime text after monthlyincome;
+alter table employee modify educationfield text after overtime;
+alter table employee modify maritalstatus text after distancefromhome;
+alter table employee modify educationfield text after businesstravel;
+alter table employee modify standardhours int after department;
+alter table employee modify percentsalaryhike int after monthlyincome;
+alter table employee modify totalworkingyears int after department;
+alter table employee modify attrition text after employeenumber;
+alter table employee modify worklifebalance text after maritalstatus;
+
+-- Identify and drop duplicate
+select employeenumber, count(*)
+from employee
+group by employeenumber
+having count(*) > 1;
+
+-- Change value int to value text
+alter table emp_demo modify column education text;
+alter table emp_dtl modify column wlb text;
+alter table emp_dtl modify column environment_rate text;
+alter table emp_dtl modify column perform_rate text;
+alter table emp_dtl modify column JobSatisfaction text;
+
+update emp_demo set education = 'Below College' where education = 1;
+update emp_demo set education = 'College' where education = 2;
+update emp_demo set education = 'Bachelor' where education = 3;
+update emp_demo set education = 'Master' where education = 4;
+update emp_demo set education = 'Phd' where education = 5;
+
+update emp_dtl set wlb = 'poor' where wlb = 1;
+update emp_dtl set wlb = 'medium' where wlb = 2;
+update emp_dtl set wlb = 'high' where wlb = 3;
+update emp_dtl set wlb = 'very high' where wlb = 4;
+
+update emp_dtl set environment_rate = 'poor' where environment_rate = 1;
+update emp_dtl set environment_rate = 'medium' where environment_rate = 2;
+update emp_dtl set environment_rate = 'high' where environment_rate = 3;
+update emp_dtl set environment_rate = 'very high' where environment_rate = 4;
+
+update emp_dtl set jobsatisfaction = 'poor' where jobsatisfaction = 1;
+update emp_dtl set jobsatisfaction = 'medium' where jobsatisfaction = 2;
+update emp_dtl set jobsatisfaction = 'high' where jobsatisfaction = 3;
+update emp_dtl set jobsatisfaction = 'very high' where jobsatisfaction = 4;
+
+update emp_dtl set perform_rate = 'poor' where perform_rate = 1;
+update emp_dtl set perform_rate = 'medium' where perform_rate = 2;
+update emp_dtl set perform_rate = 'high' where perform_rate = 3;
+update emp_dtl set perform_rate = 'very high' where perform_rate = 4;
+
+-- Update column name
+alter table emp_demo
+rename column `DistanceFromHome (KM)` to work_dist;
+alter table emp_demo
+rename column `employeenumber` to emp_id;
+
+alter table emp_dtl
+rename column `worklifebalance` to wlb;
+alter table emp_dtl
+rename column `Environment` to environment_rate, rename column `Performance` to perform_rate;
+alter table emp_rate
+rename column `totalworkingyears` to experience;
+
+
+
+
+
+
+
